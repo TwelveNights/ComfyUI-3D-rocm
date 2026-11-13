@@ -1,0 +1,13 @@
+diffusers>=0.32
+transformers>=4.46
+huggingface_hub
+einops
+omegaconf
+jaxtyping
+typeguard
+scikit-image
+trimesh
+pymeshlab
+xatlas
+opencv-python-headless
+spandrel

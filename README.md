@@ -30,14 +30,14 @@ You need ComfyUI 0.34 or newer running on a ROCm PyTorch: on Windows, ComfyUI's
 
 1. **Install the node pack.** In ComfyUI Manager open *Custom Nodes Manager*, search for **rocm**, install
    **3D generation (ROCm)** and restart ComfyUI when it asks. (No Manager button? Start ComfyUI with
-   `--enable-manager`.) Manager runs `install.py`, which adds the Python packages
-   the models need (diffusers, transformers, trimesh, pymeshlab, xatlas, Real-ESRGAN, ...) and keeps your PyTorch as
-   it is. Without Manager:
+   `--enable-manager`.) Manager installs the Python packages in `requirements.txt` (diffusers, transformers,
+   trimesh, pymeshlab, xatlas, spandrel, ...); none of them asks for a particular torch, so your ROCm PyTorch stays
+   as it is. Without Manager:
 
    ```
    cd ComfyUI/custom_nodes
    git clone https://github.com/TwelveNights/ComfyUI-3D-rocm.git
-   python ComfyUI-3D-rocm/install.py
+   python -m pip install -r ComfyUI-3D-rocm/requirements.txt
    ```
 
    On the Windows portable, use `python_embeded\python.exe` from the portable folder as `python`.

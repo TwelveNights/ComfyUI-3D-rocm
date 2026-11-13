@@ -246,9 +246,6 @@ def _paint_pipeline(settings):
     for k in [k for k in _cache if k[0] == "hy3d_paint"]:
         del _cache[k]
     paint_dir, dino_dir, esrgan = _download_paint_models()
-    from .vendor.hy3dpaint.torchvision_fix import apply_fix
-
-    apply_fix()  # basicsr (Real-ESRGAN) imports a module newer torchvision moved
     from .vendor.hy3dpaint.textureGenPipeline import Hunyuan3DPaintConfig, Hunyuan3DPaintPipeline
 
     here = os.path.join(os.path.dirname(os.path.abspath(__file__)), "vendor", "hy3dpaint")

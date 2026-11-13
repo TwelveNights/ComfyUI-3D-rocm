@@ -3,7 +3,7 @@
 Image to textured 3D asset in ComfyUI on AMD GPUs: [TripoSG](https://github.com/VAST-AI-Research/TripoSG)
 image-to-mesh and the [Hunyuan3D-2.1](https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1) PBR texture painter as
 ComfyUI nodes, on Radeon and Instinct GPUs, Linux and Windows. No CUDA or C++ extensions, no Blender, nothing to
-compile. Also runs on NVIDIA.
+compile.
 
 ![Input image, then the textured models from TripoSG + Paint and from ComfyUI's Hunyuan3D-2.1 shape + Paint](assets/robot.jpg)
 
@@ -13,20 +13,22 @@ maps.
 
 | Workflow, per image (warm) | RX 7800 XT 16 GB, Windows | Radeon PRO W7900 48 GB, Linux |
 | --- | --- | --- |
-| TripoSG + Paint | 124 s (mesh 20 s, texture 99 s) | 49-52 s (mesh 15 s, texture 32-34 s) |
-| Hunyuan3D-2.1 shape (ComfyUI native) + Paint | 178 s | 100-111 s |
+| TripoSG + Paint | 97 s (mesh 25 s, texture 68 s) | 49-52 s (mesh 15 s, texture 32-34 s) |
+| Hunyuan3D-2.1 shape (ComfyUI native) + Paint | 161 s | 100-111 s |
 
-Peak GPU memory is 10 GiB, so 16 GB cards work. Measured with
-[SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) installed and ComfyUI started with
-`--use-sage-attention`; between runs the models wait in CPU memory (`keep_loaded` off). The first run of a session
+Peak GPU memory is about 10 GiB (13 GiB on the first run, while MIOpen picks its kernels), so 16 GB cards work.
+RX 7800 XT: a fresh ComfyUI 0.45 Windows portable for AMD with this node pack installed through ComfyUI Manager and
+nothing else. W7900: with [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) and
+`--use-sage-attention`. Between runs the models wait in CPU memory (`keep_loaded` off). The first run of a session
 takes longer: it loads the models from disk and MIOpen picks its convolution kernels.
 
 ## Getting started
 
 You need ComfyUI 0.34 or newer running on a ROCm PyTorch: on Windows, ComfyUI's
 [Windows portable for AMD GPUs](https://github.com/Comfy-Org/ComfyUI/releases); on Linux, ComfyUI with
-[ROCm PyTorch](https://pytorch.org/get-started/locally/). A 16 GB GPU is enough. The models take about 26 GB of disk.
-(It also runs on NVIDIA.)
+[ROCm PyTorch](https://pytorch.org/get-started/locally/). A 16 GB GPU is enough; the models take about 26 GB of disk.
+Tested on Windows 11 with ComfyUI 0.45's portable for AMD (RX 7800 XT) and on Linux with ROCm 7 PyTorch (W7900).
+Nothing in it is AMD-specific, but it has not been tested on NVIDIA.
 
 1. **Install the node pack.** In ComfyUI Manager open *Custom Nodes Manager*, search for **rocm**, install
    **3D generation (ROCm)** and restart ComfyUI when it asks. (No Manager button? Start ComfyUI with
@@ -55,9 +57,9 @@ You need ComfyUI 0.34 or newer running on a ROCm PyTorch: on Windows, ComfyUI's
    `models/triposg`, `models/hunyuan3d` and `models/upscale_models`; progress shows in the console).
 4. **Load an image and run.** One object per image works best. The result is previewed in the *Save 3D Model* node
    and saved as a GLB in `output/3d`, ready for Blender, Godot, Unity or a glTF viewer.
-5. **Optional, faster:** install [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) into
-   ComfyUI's Python and start ComfyUI with `--use-sage-attention`. The nodes use it automatically when it is
-   installed (`attention` = `auto`).
+5. **Optional:** [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) (8-bit attention). The
+   nodes use it automatically when it is installed (`attention` = `auto`; `pytorch` turns it off). The 7800 XT
+   numbers above are without it.
 
 The first run of a session is slower than the ones after it: models load from disk and MIOpen picks its kernels.
 On Windows, close other programs that use a lot of GPU memory: when VRAM runs out the driver moves memory to system

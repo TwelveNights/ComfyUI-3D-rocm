@@ -11,3 +11,4 @@ pymeshlab
 xatlas
 opencv-python-headless
 spandrel
+fast-simplification

@@ -309,10 +309,10 @@ class Hunyuan3DPaint(IO.ComfyNode):
                 img, alpha = foreground(image[0], mask[0] if mask is not None else None)
                 rgba = torch.cat([img, alpha[..., None]], -1)
                 ref = Image.fromarray((rgba.cpu().numpy() * 255).round().astype(np.uint8), "RGBA")
-                with tempfile.TemporaryDirectory(prefix="hy3d_paint_") as tmp:
+                # ignore_cleanup_errors: on Windows a file still held open would otherwise hide the real error
+                with tempfile.TemporaryDirectory(prefix="hy3d_paint_", ignore_cleanup_errors=True) as tmp:
                     trimesh.Trimesh(v, f, process=False).export(os.path.join(tmp, "mesh.glb"))
-                    ref.save(os.path.join(tmp, "ref.png"))
-                    out = pipe(mesh_path=os.path.join(tmp, "mesh.glb"), image_path=os.path.join(tmp, "ref.png"),
+                    out = pipe(mesh_path=os.path.join(tmp, "mesh.glb"), image_path=ref,
                                output_mesh_path=os.path.join(tmp, "textured.obj"), save_glb=False)
                     result = _load_textured(out)
                 log.info("Hunyuan3D-2.1 Paint: load %.1f s, paint %.1f s", t1 - t0, time.perf_counter() - t1)

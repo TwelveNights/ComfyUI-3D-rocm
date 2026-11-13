@@ -1,0 +1,1054 @@
+{
+ "id": "703d7745-127d-425b-a842-3c79e0bca078",
+ "revision": 0,
+ "last_node_id": 10,
+ "last_link_id": 11,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadImage",
+   "pos": [
+    40,
+    120
+   ],
+   "size": [
+    280,
+    320
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "image",
+     "locked": null,
+     "name": "image",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "choose file to upload",
+     "locked": null,
+     "name": "upload",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "IMAGE",
+     "locked": null,
+     "name": "IMAGE",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "IMAGE",
+     "pos": null,
+     "slot_index": null,
+     "links": [
+      2,
+      7,
+      11
+     ]
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "MASK",
+     "locked": null,
+     "name": "MASK",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "MASK",
+     "pos": null,
+     "slot_index": null,
+     "links": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "3d_hunyuan3d-v2.1_input_image.png",
+    "image"
+   ],
+   "widgets_values_named": {
+    "image": "3d_hunyuan3d-v2.1_input_image.png",
+    "upload": "image"
+   }
+  },
+  {
+   "id": 2,
+   "type": "TripoSGLoaderROCm",
+   "pos": [
+    40,
+    720
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "precision",
+     "locked": null,
+     "name": "precision",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "COMBO",
+     "widget": {
+      "name": "precision"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "model",
+     "locked": null,
+     "name": "model",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "TRIPOSG_MODEL",
+     "pos": null,
+     "slot_index": null,
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TripoSGLoaderROCm"
+   },
+   "widgets_values": [
+    "fp16"
+   ],
+   "widgets_values_named": {
+    "precision": "fp16"
+   }
+  },
+  {
+   "id": 3,
+   "type": "TripoSGImageToMeshROCm",
+   "pos": [
+    420,
+    120
+   ],
+   "size": [
+    309.9,
+    242
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "model",
+     "locked": null,
+     "name": "model",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "TRIPOSG_MODEL",
+     "pos": null,
+     "link": 1
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "image",
+     "locked": null,
+     "name": "image",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "IMAGE",
+     "pos": null,
+     "link": 2
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "mask",
+     "locked": null,
+     "name": "mask",
+     "nameLocked": null,
+     "removable": null,
+     "shape": 7,
+     "type": "MASK",
+     "pos": null,
+     "link": 3
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "steps",
+     "locked": null,
+     "name": "steps",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "guidance",
+     "locked": null,
+     "name": "guidance",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "FLOAT",
+     "widget": {
+      "name": "guidance"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "seed",
+     "locked": null,
+     "name": "seed",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "octree_depth",
+     "locked": null,
+     "name": "octree_depth",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "INT",
+     "widget": {
+      "name": "octree_depth"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "attention",
+     "locked": null,
+     "name": "attention",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "COMBO",
+     "widget": {
+      "name": "attention"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "keep_loaded",
+     "locked": null,
+     "name": "keep_loaded",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "keep_loaded"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "MESH",
+     "locked": null,
+     "name": "MESH",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "MESH",
+     "pos": null,
+     "slot_index": null,
+     "links": [
+      4,
+      6
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TripoSGImageToMeshROCm"
+   },
+   "widgets_values": [
+    25,
+    7,
+    42,
+    "randomize",
+    8,
+    "auto",
+    false
+   ],
+   "widgets_values_named": {
+    "steps": 25,
+    "guidance": 7,
+    "seed": 42,
+    "control_after_generate": "randomize",
+    "octree_depth": 8,
+    "attention": "auto",
+    "keep_loaded": false
+   }
+  },
+  {
+   "id": 4,
+   "type": "SaveGLB",
+   "pos": [
+    800,
+    60
+   ],
+   "size": [
+    400,
+    500
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "mesh",
+     "locked": null,
+     "name": "mesh",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "MESH,FILE_3D_GLB,FILE_3D_GLTF,FILE_3D_OBJ,FILE_3D_FBX,FILE_3D_STL,FILE_3D_USDZ,FILE_3D_PLY,FILE_3D_SPLAT,FILE_3D_SPZ,FILE_3D_KSPLAT,FILE_3D_SPLAT_ANY,FILE_3D_POINT_CLOUD_ANY,FILE_3D",
+     "pos": null,
+     "link": 4
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "filename_prefix",
+     "locked": null,
+     "name": "filename_prefix",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "image",
+     "locked": null,
+     "name": "image",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "PREVIEW_3D",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "properties": {},
+   "widgets_values": [
+    "3d/triposg",
+    ""
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "3d/triposg",
+    "image": ""
+   }
+  },
+  {
+   "id": 5,
+   "type": "Hunyuan3DPaintLoaderROCm",
+   "pos": [
+    420,
+    420
+   ],
+   "size": [
+    343.9,
+    106
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "views",
+     "locked": null,
+     "name": "views",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "INT",
+     "widget": {
+      "name": "views"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "view_resolution",
+     "locked": null,
+     "name": "view_resolution",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "COMBO",
+     "widget": {
+      "name": "view_resolution"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "texture_size",
+     "locked": null,
+     "name": "texture_size",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "COMBO",
+     "widget": {
+      "name": "texture_size"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "paint",
+     "locked": null,
+     "name": "paint",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "HY3D_PAINT",
+     "pos": null,
+     "slot_index": null,
+     "links": [
+      5
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Hunyuan3DPaintLoaderROCm"
+   },
+   "widgets_values": [
+    6,
+    "512",
+    "2048"
+   ],
+   "widgets_values_named": {
+    "views": 6,
+    "view_resolution": "512",
+    "texture_size": "2048"
+   }
+  },
+  {
+   "id": 6,
+   "type": "Hunyuan3DPaintROCm",
+   "pos": [
+    1240,
+    60
+   ],
+   "size": [
+    293.9,
+    142
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "paint",
+     "locked": null,
+     "name": "paint",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "HY3D_PAINT",
+     "pos": null,
+     "link": 5
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "mesh",
+     "locked": null,
+     "name": "mesh",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "MESH",
+     "pos": null,
+     "link": 6
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "image",
+     "locked": null,
+     "name": "image",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "IMAGE",
+     "pos": null,
+     "link": 7
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "mask",
+     "locked": null,
+     "name": "mask",
+     "nameLocked": null,
+     "removable": null,
+     "shape": 7,
+     "type": "MASK",
+     "pos": null,
+     "link": 8
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "attention",
+     "locked": null,
+     "name": "attention",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "COMBO",
+     "widget": {
+      "name": "attention"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "keep_loaded",
+     "locked": null,
+     "name": "keep_loaded",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "keep_loaded"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "MESH",
+     "locked": null,
+     "name": "MESH",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "MESH",
+     "pos": null,
+     "slot_index": null,
+     "links": [
+      9
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "Hunyuan3DPaintROCm"
+   },
+   "widgets_values": [
+    "auto",
+    false
+   ],
+   "widgets_values_named": {
+    "attention": "auto",
+    "keep_loaded": false
+   }
+  },
+  {
+   "id": 7,
+   "type": "SaveGLB",
+   "pos": [
+    1240,
+    240
+   ],
+   "size": [
+    400,
+    500
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "mesh",
+     "locked": null,
+     "name": "mesh",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "MESH,FILE_3D_GLB,FILE_3D_GLTF,FILE_3D_OBJ,FILE_3D_FBX,FILE_3D_STL,FILE_3D_USDZ,FILE_3D_PLY,FILE_3D_SPLAT,FILE_3D_SPZ,FILE_3D_KSPLAT,FILE_3D_SPLAT_ANY,FILE_3D_POINT_CLOUD_ANY,FILE_3D",
+     "pos": null,
+     "link": 9
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "filename_prefix",
+     "locked": null,
+     "name": "filename_prefix",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "image",
+     "locked": null,
+     "name": "image",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "PREVIEW_3D",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "properties": {},
+   "widgets_values": [
+    "3d/triposg_painted",
+    ""
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "3d/triposg_painted",
+    "image": ""
+   }
+  },
+  {
+   "id": 8,
+   "type": "LoadBackgroundRemovalModel",
+   "pos": [
+    40,
+    480
+   ],
+   "size": [
+    321.9,
+    58
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "bg_removal_name",
+     "locked": null,
+     "name": "bg_removal_name",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "COMBO",
+     "widget": {
+      "name": "bg_removal_name"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "bg_model",
+     "locked": null,
+     "name": "bg_model",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "BACKGROUND_REMOVAL",
+     "pos": null,
+     "slot_index": null,
+     "links": [
+      10
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadBackgroundRemovalModel",
+    "models": [
+     {
+      "name": "birefnet.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/BiRefNet/resolve/main/background_removal/birefnet.safetensors",
+      "directory": "background_removal"
+     }
+    ]
+   },
+   "widgets_values": [
+    "birefnet.safetensors"
+   ],
+   "widgets_values_named": {
+    "bg_removal_name": "birefnet.safetensors"
+   }
+  },
+  {
+   "id": 9,
+   "type": "RemoveBackground",
+   "pos": [
+    40,
+    600
+   ],
+   "size": [
+    182,
+    46
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "bg_removal_model",
+     "locked": null,
+     "name": "bg_removal_model",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "BACKGROUND_REMOVAL",
+     "pos": null,
+     "link": 10
+    },
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "image",
+     "locked": null,
+     "name": "image",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "IMAGE",
+     "pos": null,
+     "link": 11
+    }
+   ],
+   "outputs": [
+    {
+     "color_off": null,
+     "color_on": null,
+     "dir": null,
+     "label": null,
+     "localized_name": "mask",
+     "locked": null,
+     "name": "mask",
+     "nameLocked": null,
+     "removable": null,
+     "shape": null,
+     "type": "MASK",
+     "pos": null,
+     "slot_index": null,
+     "links": [
+      3,
+      8
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RemoveBackground"
+   }
+  },
+  {
+   "id": 10,
+   "type": "MarkdownNote",
+   "pos": [
+    -560,
+    120
+   ],
+   "size": [
+    560,
+    460
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "showAdvanced": null,
+   "inputs": [],
+   "outputs": [],
+   "properties": {},
+   "widgets_values": [
+    "## TripoSG + Hunyuan3D-2.1 Paint on AMD\n\nImage in, textured GLB out (`ComfyUI/output/3d`). One object per image works best.\n\nExample input: [3d_hunyuan3d-v2.1_input_image.png](https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/input/3d_hunyuan3d-v2.1_input_image.png) (put it in `ComfyUI/input`)\n\n**Models**\n\n- [birefnet.safetensors](https://huggingface.co/Comfy-Org/BiRefNet/resolve/main/background_removal/birefnet.safetensors) in `models/background_removal`\n\nThese download on first run (about 18 GB, once):\n\n- TripoSG ([VAST-AI/TripoSG](https://huggingface.co/VAST-AI/TripoSG)) to `models/triposg/TripoSG`\n- Hunyuan3D-2.1 paint ([tencent/Hunyuan3D-2.1](https://huggingface.co/tencent/Hunyuan3D-2.1), `hunyuan3d-paintpbr-v2-1`) to `models/hunyuan3d/Hunyuan3D-2.1`\n- DINOv2 giant ([facebook/dinov2-giant](https://huggingface.co/facebook/dinov2-giant)) to `models/hunyuan3d/dinov2-giant`\n- [RealESRGAN_x4plus.pth](https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth) to `models/upscale_models`\n\nInstall [SageAttention](https://github.com/TwelveNights/SageAttention-rocm) for the fast path.\n"
+   ],
+   "widgets_values_named": {
+    "text": "## TripoSG + Hunyuan3D-2.1 Paint on AMD\n\nImage in, textured GLB out (`ComfyUI/output/3d`). One object per image works best.\n\nExample input: [3d_hunyuan3d-v2.1_input_image.png](https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/input/3d_hunyuan3d-v2.1_input_image.png) (put it in `ComfyUI/input`)\n\n**Models**\n\n- [birefnet.safetensors](https://huggingface.co/Comfy-Org/BiRefNet/resolve/main/background_removal/birefnet.safetensors) in `models/background_removal`\n\nThese download on first run (about 18 GB, once):\n\n- TripoSG ([VAST-AI/TripoSG](https://huggingface.co/VAST-AI/TripoSG)) to `models/triposg/TripoSG`\n- Hunyuan3D-2.1 paint ([tencent/Hunyuan3D-2.1](https://huggingface.co/tencent/Hunyuan3D-2.1), `hunyuan3d-paintpbr-v2-1`) to `models/hunyuan3d/Hunyuan3D-2.1`\n- DINOv2 giant ([facebook/dinov2-giant](https://huggingface.co/facebook/dinov2-giant)) to `models/hunyuan3d/dinov2-giant`\n- [RealESRGAN_x4plus.pth](https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth) to `models/upscale_models`\n\nInstall [SageAttention](https://github.com/TwelveNights/SageAttention-rocm) for the fast path.\n"
+   },
+   "color": "#432",
+   "bgcolor": "#653"
+  }
+ ],
+ "links": [
+  [
+   1,
+   2,
+   0,
+   3,
+   0,
+   "TRIPOSG_MODEL"
+  ],
+  [
+   2,
+   1,
+   0,
+   3,
+   1,
+   "IMAGE"
+  ],
+  [
+   3,
+   9,
+   0,
+   3,
+   2,
+   "MASK"
+  ],
+  [
+   4,
+   3,
+   0,
+   4,
+   0,
+   "MESH"
+  ],
+  [
+   5,
+   5,
+   0,
+   6,
+   0,
+   "HY3D_PAINT"
+  ],
+  [
+   6,
+   3,
+   0,
+   6,
+   1,
+   "MESH"
+  ],
+  [
+   7,
+   1,
+   0,
+   6,
+   2,
+   "IMAGE"
+  ],
+  [
+   8,
+   9,
+   0,
+   6,
+   3,
+   "MASK"
+  ],
+  [
+   9,
+   6,
+   0,
+   7,
+   0,
+   "MESH"
+  ],
+  [
+   10,
+   8,
+   0,
+   9,
+   0,
+   "BACKGROUND_REMOVAL"
+  ],
+  [
+   11,
+   1,
+   0,
+   9,
+   1,
+   "IMAGE"
+  ]
+ ],
+ "floatingLinks": null,
+ "groups": [],
+ "definitions": null,
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.9,
+   "offset": [
+    416,
+    110
+   ]
+  },
+  "reroutes": null
+ },
+ "version": 0.4
+}

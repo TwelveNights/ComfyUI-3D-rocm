@@ -46,7 +46,8 @@ You need ComfyUI 0.34 or newer running on a ROCm PyTorch: on Windows, ComfyUI's
    - **triposg-paint**: image → TripoSG mesh → Hunyuan3D-2.1 Paint textures.
    - **hunyuan3d-2.1-paint**: ComfyUI's own Hunyuan3D-2.1 shape template, with the painter added.
 3. **Get the models the workflow asks for.** ComfyUI flags missing files when the workflow opens; *View details*
-   lists each one with a download button and its folder:
+   lists each one with a download button and its folder (from the browser the file goes to your downloads folder;
+   move it into that `models` folder):
    [birefnet.safetensors](https://huggingface.co/Comfy-Org/BiRefNet/resolve/main/background_removal/birefnet.safetensors)
    (Remove Background, `models/background_removal`) and, for the second workflow,
    [hunyuan_3d_v2.1.safetensors](https://huggingface.co/Comfy-Org/hunyuan3D_2.1_repackaged/resolve/main/hunyuan_3d_v2.1.safetensors)

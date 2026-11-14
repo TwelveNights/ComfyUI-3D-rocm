@@ -57,9 +57,11 @@ Nothing in it is AMD-specific, but it has not been tested on NVIDIA.
    `models/triposg`, `models/hunyuan3d` and `models/upscale_models`; progress shows in the console).
 4. **Load an image and run.** One object per image works best. The result is previewed in the *Save 3D Model* node
    and saved as a GLB in `output/3d`, ready for Blender, Godot, Unity or a glTF viewer.
-5. **Optional:** [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) (8-bit attention). The
-   nodes use it automatically when it is installed (`attention` = `auto`; `pytorch` turns it off). The 7800 XT
-   numbers above are without it.
+5. **Optional:** [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) (8-bit attention):
+   `python -m pip install sageattention-rocm` with ComfyUI's Python (on Windows it also needs the one-time ROCm SDK
+   command it prints). The nodes use it automatically when it is installed (`attention` = `auto`; `pytorch` turns
+   it off); start ComfyUI with `--use-sage-attention` to use it in ComfyUI's own nodes too. The 7800 XT numbers
+   above are without it.
 
 The first run of a session is slower than the ones after it: models load from disk and MIOpen picks its kernels.
 On Windows, close other programs that use a lot of GPU memory: when VRAM runs out the driver moves memory to system

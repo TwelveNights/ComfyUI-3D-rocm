@@ -40,8 +40,8 @@ def backends(mode):
 
     saved_sdpa, saved_cudnn = F.scaled_dot_product_attention, torch.backends.cudnn.enabled
     if mode != "pytorch" and not use_sage_attention() and mode == "sage":
-        raise RuntimeError("attention=sage, but SageAttention is not installed (pip install sageattention, or "
-                           "SageAttention-rocm on AMD)")
+        raise RuntimeError("attention=sage, but SageAttention is not installed (pip install sageattention-rocm on "
+                           "AMD GPUs, sageattention on NVIDIA)")
     if torch.version.hip:
         torch.backends.cudnn.enabled = True
     try:

@@ -11,16 +11,16 @@ The painter textures any ComfyUI `MESH`: from TripoSG, from ComfyUI's native Hun
 other generators. Output goes to ComfyUI's own **Save 3D Model** node as a GLB with base color, metallic and roughness
 maps.
 
-| Workflow, per image (warm) | RX 7800 XT 16 GB, Windows | Radeon PRO W7900 48 GB, Linux |
-| --- | --- | --- |
-| TripoSG + Paint | 97 s (mesh 25 s, texture 68 s) | 49-52 s (mesh 15 s, texture 32-34 s) |
-| Hunyuan3D-2.1 shape (ComfyUI native) + Paint | 161 s | 100-111 s |
+| Workflow, per image (warm) | RX 7800 XT 16 GB, Windows | RX 7800 XT + SageAttention | Radeon PRO W7900, Linux + SageAttention |
+| --- | --- | --- | --- |
+| TripoSG + Paint | 98 s (mesh 25 s, texture 69-74 s) | 69-70 s (mesh 20 s, texture 46-47 s) | 49-52 s (mesh 15 s, texture 32-34 s) |
+| Hunyuan3D-2.1 shape (ComfyUI native) + Paint | 162-167 s | 138-143 s | 100-111 s |
 
 Peak GPU memory is about 10 GiB (13 GiB on the first run, while MIOpen picks its kernels), so 16 GB cards work.
-RX 7800 XT: a fresh ComfyUI 0.45 Windows portable for AMD with this node pack installed through ComfyUI Manager and
-nothing else. W7900: with [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) and
-`--use-sage-attention`. Between runs the models wait in CPU memory (`keep_loaded` off). The first run of a session
-takes longer: it loads the models from disk and MIOpen picks its convolution kernels.
+RX 7800 XT: a fresh ComfyUI 0.45 Windows portable for AMD with this node pack installed through ComfyUI Manager;
+the SageAttention column adds `pip install sageattention-rocm` and `--use-sage-attention`. Between runs the models
+wait in CPU memory (`keep_loaded` off). The first run of a session takes longer: it loads the models from disk and
+MIOpen picks its convolution kernels.
 
 ## Getting started
 
@@ -60,8 +60,8 @@ Nothing in it is AMD-specific, but it has not been tested on NVIDIA.
 5. **Optional:** [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) (8-bit attention):
    `python -m pip install sageattention-rocm` with ComfyUI's Python (on Windows it also needs the one-time ROCm SDK
    command it prints). The nodes use it automatically when it is installed (`attention` = `auto`; `pytorch` turns
-   it off); start ComfyUI with `--use-sage-attention` to use it in ComfyUI's own nodes too. The 7800 XT numbers
-   above are without it.
+   it off); start ComfyUI with `--use-sage-attention` to use it in ComfyUI's own nodes too. On the RX 7800 XT it
+   takes TripoSG + Paint from 98 s to 70 s.
 
 The first run of a session is slower than the ones after it: models load from disk and MIOpen picks its kernels.
 On Windows, close other programs that use a lot of GPU memory: when VRAM runs out the driver moves memory to system

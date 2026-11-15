@@ -20,7 +20,6 @@ from PIL import Image
 from typing import List
 import huggingface_hub
 from omegaconf import OmegaConf
-from diffusers import DiffusionPipeline
 from diffusers import EulerAncestralDiscreteScheduler, DDIMScheduler, UniPCMultistepScheduler
 
 
@@ -29,7 +28,6 @@ class multiviewDiffusionNet:
         self.device = config.device
 
         cfg_path = config.multiview_cfg_path
-        custom_pipeline = os.path.join(os.path.dirname(__file__),"..","hunyuanpaintpbr")
         cfg = OmegaConf.load(cfg_path)
         self.cfg = cfg
         self.mode = self.cfg.model.params.stable_diffusion_config.custom_pipeline[2:]
@@ -43,11 +41,24 @@ class multiviewDiffusionNet:
             )
 
         model_path = os.path.join(model_path, "hunyuan3d-paintpbr-v2-1")
-        pipeline = DiffusionPipeline.from_pretrained(
-            model_path,
-            custom_pipeline=custom_pipeline,
-            torch_dtype=torch.float16,
-            trust_remote_code=True,  # the pipeline code ships with this repo (hunyuanpaintpbr); newer diffusers ask
+        # Build the pipeline from the classes vendored here instead of letting diffusers import the Python files that
+        # ship inside the model repository: only weights and configs are loaded from the download, never code.
+        from diffusers import AutoencoderKL
+        from transformers import CLIPImageProcessor, CLIPTextModel, CLIPTokenizer
+
+        from ..hunyuanpaintpbr.pipeline import HunyuanPaintPipeline
+        from ..hunyuanpaintpbr.unet.modules import UNet2p5DConditionModel
+
+        def part(name):
+            return os.path.join(model_path, name)
+
+        pipeline = HunyuanPaintPipeline(
+            vae=AutoencoderKL.from_pretrained(part("vae"), torch_dtype=torch.float16),
+            text_encoder=CLIPTextModel.from_pretrained(part("text_encoder"), torch_dtype=torch.float16),
+            tokenizer=CLIPTokenizer.from_pretrained(part("tokenizer")),
+            unet=UNet2p5DConditionModel.from_pretrained(part("unet"), torch_dtype=torch.float16),
+            scheduler=DDIMScheduler.from_pretrained(part("scheduler")),
+            feature_extractor=CLIPImageProcessor.from_pretrained(part("feature_extractor")),
         )
 
         pipeline.scheduler = UniPCMultistepScheduler.from_config(pipeline.scheduler.config, timestep_spacing="trailing")

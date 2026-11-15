@@ -40,8 +40,8 @@ def backends(mode):
 
     saved_sdpa, saved_cudnn = F.scaled_dot_product_attention, torch.backends.cudnn.enabled
     if mode != "pytorch" and not use_sage_attention() and mode == "sage":
-        raise RuntimeError("attention=sage, but SageAttention is not installed (pip install sageattention-rocm on "
-                           "AMD GPUs, sageattention on NVIDIA)")
+        raise RuntimeError("attention=sage, but SageAttention is not installed: see SageAttention in the "
+                           "ComfyUI-3D-rocm README (sageattention-rocm on AMD GPUs)")
     if torch.version.hip:
         torch.backends.cudnn.enabled = True
     try:
@@ -202,8 +202,9 @@ def _download_paint_models():
 
     paint_dir = os.path.join(HY3D_DIR, "Hunyuan3D-2.1")
     if not os.path.exists(os.path.join(paint_dir, "hunyuan3d-paintpbr-v2-1", "model_index.json")):
+        # weights and configs only: the repository's Python files are never imported (see multiview_utils)
         snapshot_download(repo_id="tencent/Hunyuan3D-2.1", allow_patterns=["hunyuan3d-paintpbr-v2-1/*"],
-                          local_dir=paint_dir)
+                          ignore_patterns=["*.py"], local_dir=paint_dir)
     dino_dir = os.path.join(HY3D_DIR, "dinov2-giant")
     if not os.path.exists(os.path.join(dino_dir, "config.json")):
         snapshot_download(repo_id="facebook/dinov2-giant", local_dir=dino_dir,
@@ -255,7 +256,6 @@ def _paint_pipeline(settings):
     conf.dino_ckpt_path = dino_dir
     conf.realesrgan_ckpt_path = esrgan
     conf.multiview_cfg_path = os.path.join(here, "cfgs", "hunyuan-paint-pbr.yaml")
-    conf.custom_pipeline = os.path.join(here, "hunyuanpaintpbr")
     conf.texture_size = settings["texture_size"]
     _cache[key] = Hunyuan3DPaintPipeline(conf)
     return _cache[key]

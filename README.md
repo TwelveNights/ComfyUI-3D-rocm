@@ -58,8 +58,8 @@ Nothing in it is AMD-specific, but it has not been tested on NVIDIA.
 4. **Load an image and run.** One object per image works best. The result is previewed in the *Save 3D Model* node
    and saved as a GLB in `output/3d`, ready for Blender, Godot, Unity or a glTF viewer.
 5. **Optional:** [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) (8-bit attention):
-   `python -m pip install sageattention-rocm` with ComfyUI's Python (on Windows it also needs the one-time ROCm SDK
-   command it prints). The nodes use it automatically when it is installed (`attention` = `auto`; `pytorch` turns
+   `python -m pip install sageattention-rocm` with ComfyUI's Python (on Windows it also needs Triton and AMD's ROCm
+   SDK package once; see its README, and it prints the exact commands). The nodes use it automatically when it is installed (`attention` = `auto`; `pytorch` turns
    it off); start ComfyUI with `--use-sage-attention` to use it in ComfyUI's own nodes too. On the RX 7800 XT it
    takes TripoSG + Paint from 98 s to 70 s.
 

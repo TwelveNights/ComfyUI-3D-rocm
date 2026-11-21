@@ -18,6 +18,14 @@ import numpy as np
 import torch
 
 
+def matmul_rows(a, m, rows=1 << 18):
+    """a @ m for a tall (N, k) matrix, a block of rows at a time. On ROCm with an RX 9070 XT (gfx1201, PyTorch
+    2.9.1+rocm7.2.1) one matmul of more than 2**19 rows returns wrong values for every row past 2**19."""
+    if a.shape[0] <= rows:
+        return torch.matmul(a, m)
+    return torch.cat([torch.matmul(a[i:i + rows], m) for i in range(0, a.shape[0], rows)], dim=0)
+
+
 def transform_pos(mtx, pos, keepdim=False):
     t_mtx = torch.from_numpy(mtx).to(pos.device) if isinstance(mtx, np.ndarray) else mtx
     if pos.shape[-1] == 3:
@@ -26,9 +34,9 @@ def transform_pos(mtx, pos, keepdim=False):
         posw = pos
 
     if keepdim:
-        return torch.matmul(posw, t_mtx.t())[...]
+        return matmul_rows(posw, t_mtx.t())[...]
     else:
-        return torch.matmul(posw, t_mtx.t())[None, ...]
+        return matmul_rows(posw, t_mtx.t())[None, ...]
 
 
 def get_mv_matrix(elev, azim, camera_distance, center=None):

@@ -22,6 +22,7 @@ from typing import Union, Optional, Tuple, List, Any, Callable
 from dataclasses import dataclass
 from enum import Enum
 from .camera_utils import (
+    matmul_rows,
     transform_pos,
     get_mv_matrix,
     get_orthographic_projection_matrix,
@@ -1256,7 +1257,7 @@ class MeshRender:
                 np.array(((proj[0, 0], 0, 0, 0), (0, proj[1, 1], 0, 0), (0, 0, 1, 0), (0, 0, 0, 1)))
             ).to(self.tex_position)
             w2c = torch.from_numpy(r_mv).to(self.tex_position)
-            v_proj = self.tex_position @ w2c.T @ img_proj
+            v_proj = matmul_rows(self.tex_position, w2c.T @ img_proj)  # in blocks: see matmul_rows
             inner_mask = (v_proj[:, 0] <= 1.0) & (v_proj[:, 0] >= -1.0) & (v_proj[:, 1] <= 1.0) & (v_proj[:, 1] >= -1.0)
             inner_valid_idx = torch.where(inner_mask)[0].long()
             img_x = torch.clamp(

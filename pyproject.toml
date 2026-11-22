@@ -1,6 +1,6 @@
 [project]
 name = "comfyui-3d-rocm"
-version = "1.0.3"
+version = "1.0.4"
 description = "Image to textured 3D asset on AMD Radeon and Instinct GPUs (ROCm), Windows and Linux: TripoSG image-to-mesh and Hunyuan3D-2.1 PBR texturing as ComfyUI nodes, with no CUDA or C++ extensions to build. Also paints meshes from ComfyUI's own Hunyuan3D-2.1 nodes. Setup: install here and restart (Manager installs the Python packages from requirements.txt; nothing pins torch, so your ROCm PyTorch stays), then open Templates > Extensions > comfyui-3d-rocm. TripoSG and the painter download their models (18 GB) on the first run."
 readme = "README.md"
 license = "Apache-2.0 AND MIT AND LicenseRef-Tencent-Hunyuan-3D-2.1-Community"
